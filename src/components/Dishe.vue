@@ -1,8 +1,12 @@
 <template>
   <q-card class="card">
-    <q-img :src="dishe.image" basic contain>
+    <q-img
+      :src="dishe.image ? dishe.image : 'statics/image-placeholder.png'"
+      basic
+      contain
+    >
       <div class="absolute-bottom text-h6">
-        {{ dishe.name }}
+        {{ dishe.nom }}
       </div>
     </q-img>
 
@@ -17,29 +21,54 @@
     </q-card-section>
 
     <q-card-section>
-      {{ dishe.description }}
+      <span v-if="dishe.description">{{ dishe.description }}</span>
+      <span v-else>Aucune description fournie.</span>
     </q-card-section>
 
     <q-card-actions class="absolute-bottom" align="right">
       <q-btn @click="showFormDishe = true" icon="edit" color="blue" flat
         >Modifier</q-btn
       >
-      <q-btn icon="delete" color="red" flat>Supprimer</q-btn>
+      <q-btn @click="confirmDelete(dishe.id)" icon="delete" color="red" flat
+        >Supprimer</q-btn
+      >
     </q-card-actions>
 
     <q-dialog v-model="showFormDishe">
-      <form-dishe action="modifier" />
+      <form-dishe
+        @close="showFormDishe = false"
+        :currentDish="dishe"
+        action="modifier"
+      />
     </q-dialog>
   </q-card>
 </template>
 
 <script>
+import { mapActions } from "vuex";
+
 export default {
   props: ["dishe"],
   data() {
     return {
       showFormDishe: false
     };
+  },
+  methods: {
+    ...mapActions("tasks", ["deleteDish"]),
+    confirmDelete(id) {
+      this.$q
+        .dialog({
+          title: "Supprimer plat",
+          message: "Supprimer ce plat ?",
+          cancel: "Annuler",
+          ok: "Supprimer",
+          persistent: true
+        })
+        .onOk(() => {
+          this.deleteDish(id);
+        });
+    }
   },
   components: {
     "form-dishe": require("components/FormDishe.vue").default

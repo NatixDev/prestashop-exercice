@@ -6,11 +6,24 @@
 
     <q-card-section>
       <div class="row q-mb-md">
-        <q-input filled v-model="dishe.name" label="Nom (Burger)" class="col" />
+        <q-input
+          :rules="[
+            val => !!val || 'Le nom est obligatoire',
+            val => val.length < 21 || '20 caractères max.'
+          ]"
+          ref="name"
+          filled
+          v-model="dishe.nom"
+          label="Nom (Burger)"
+          class="col"
+          autofocus
+        />
       </div>
 
       <div class="row q-mb-md">
         <q-input
+          :rules="[val => val.length < 136 || '135 caractères max.']"
+          ref="description"
           filled
           v-model="dishe.description"
           label="Description"
@@ -45,23 +58,45 @@
 
     <q-card-actions align="right">
       <q-btn label="Annuler" color="grey" v-close-popup />
-      <q-btn label="Sauver" color="primary" v-close-popup />
+      <q-btn label="Sauver" color="primary" @click="dishFormSubmit" />
     </q-card-actions>
   </q-card>
 </template>
 
 <script>
+import { mapActions } from "vuex";
+
 export default {
-  props: ["action"],
+  props: ["action", "currentDish"],
   data() {
     return {
       dishe: {
-        name: "",
+        nom: "",
         description: "",
         note: 1,
         image: ""
       }
     };
+  },
+  methods: {
+    ...mapActions("tasks", ["addDish", "editDish"]),
+
+    dishFormSubmit() {
+      this.$refs.name.validate();
+      this.$refs.description.validate();
+
+      if (!this.$refs.name.hasError && !this.$refs.description.hasError) {
+        this.$emit("close");
+        this.action == "ajouter"
+          ? this.addDish(this.dishe)
+          : this.editDish(this.dishe);
+      }
+    }
+  },
+  mounted() {
+    if (this.currentDish) {
+      this.dishe = Object.assign({}, this.currentDish);
+    }
   }
 };
 </script>
