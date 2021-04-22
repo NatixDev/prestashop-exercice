@@ -1,4 +1,6 @@
-import { LocalStorage } from "quasar";
+// import { LocalStorage } from "quasar";
+
+// LocalStorage.clear();
 
 const state = {
   dishes: [
@@ -37,16 +39,6 @@ const state = {
   ]
 };
 
-// LocalStorage.set("dishes", state.dishes);
-
-// LocalStorage.clear();
-
-// console.log("Test:", state, LocalStorage.getItem("dishes"));
-
-/*
-Mutations : méthode qui manipulent les données
-Les mutations ne peuvent pas être asynchrones !!!
-*/
 const mutations = {
   deleteDish(state, id) {
     state.dishes = state.dishes.filter(el => el.id !== id);
@@ -70,10 +62,7 @@ const mutations = {
     state.dishes = dishes;
   }
 };
-/*
-Actions : méthodes du magasin qui font appel aux mutations
-Elles peuvent être asynchrones !
- */
+
 const actions = {
   deleteDish({ commit }, id) {
     commit("deleteDish", id);
@@ -88,7 +77,7 @@ const actions = {
     }
     // Ajoute le nouvel id à la tache
     dish.id = uId;
-    // Commite l'ajout
+
     commit("addDish", dish);
   },
 
@@ -101,23 +90,12 @@ const actions = {
   }
 };
 
-/*
-Getters : retourne les données du magasin
-Fonctionne comme les propriétés calculées
-Sert à calculer, trier, filtrer ou formater les donneés
- */
 const getters = {
   dishes: state => {
     return state.dishes;
   }
 };
 
-/*
-Exporte les constantes, variables du fichier
-On pourra ainsi les récupérer, les importer dans un autre fichier JS.
-
-namespace: true, ajoute un namespace l'objet retourné.
- */
 export default {
   namespaced: true,
   state,

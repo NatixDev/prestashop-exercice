@@ -12,13 +12,11 @@ export default {
     ...mapActions("tasks", ["getDishes"])
   },
   mounted() {
-    // Récupère les données du localStorage
     const dishes = this.$q.localStorage.getItem("dishes");
 
-    console.log(dishes);
-    // Si les plats existent
+    console.log("Local data:", dishes);
+
     if (dishes) {
-      // Récupère les plats
       this.getDishes(dishes);
     }
   }

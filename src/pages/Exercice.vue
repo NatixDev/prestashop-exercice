@@ -31,9 +31,12 @@ export default {
       handler() {
         console.log("Dishes changed!", this.dishes);
         this.$q.localStorage.set("dishes", this.dishes);
-        console.log("After:", this.$q.localStorage.getItem("dishes"));
-      }
-      // deep: true
+        console.log(
+          "Local Storage updated:",
+          this.$q.localStorage.getItem("dishes")
+        );
+      },
+      deep: true
     }
   },
   methods: {
