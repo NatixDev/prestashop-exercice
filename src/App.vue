@@ -14,8 +14,6 @@ export default {
   mounted() {
     const dishes = this.$q.localStorage.getItem("dishes");
 
-    console.log("Local data:", dishes);
-
     if (dishes) {
       this.getDishes(dishes);
     }

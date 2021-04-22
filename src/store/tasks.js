@@ -1,7 +1,3 @@
-// import { LocalStorage } from "quasar";
-
-// LocalStorage.clear();
-
 const state = {
   dishes: [
     {
@@ -44,17 +40,15 @@ const mutations = {
     state.dishes = state.dishes.filter(el => el.id !== id);
   },
 
-  addDish(state, payload) {
-    state.dishes.push(payload);
+  addDish(state, dish) {
+    state.dishes.push(dish);
   },
 
-  editDish(state, payload) {
-    const index = state.dishes.findIndex(el => el.id === payload.id);
+  editDish(state, dish) {
+    const index = state.dishes.findIndex(el => el.id === dish.id);
 
-    // Si une tâche a été trouvée
     if (index !== -1) {
-      // Modifie l'objet trouvé avec les nouvelles valeurs
-      Object.assign(state.dishes[index], payload);
+      Object.assign(state.dishes[index], dish);
     }
   },
 
@@ -70,12 +64,11 @@ const actions = {
 
   addDish({ commit }, dish) {
     let uId = 1;
-    // Si le tableau contient des éléments
+
     if (state.dishes.length) {
-      // Récupère l'id MAX et lui ajoute 1
       uId = Math.max(...state.dishes.map(el => el.id)) + 1;
     }
-    // Ajoute le nouvel id à la tache
+
     dish.id = uId;
 
     commit("addDish", dish);

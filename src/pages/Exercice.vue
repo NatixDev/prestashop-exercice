@@ -29,12 +29,7 @@ export default {
   watch: {
     dishes: {
       handler() {
-        console.log("Dishes changed!", this.dishes);
         this.$q.localStorage.set("dishes", this.dishes);
-        console.log(
-          "Local Storage updated:",
-          this.$q.localStorage.getItem("dishes")
-        );
       },
       deep: true
     }

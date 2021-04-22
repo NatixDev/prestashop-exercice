@@ -34,7 +34,7 @@
       >
     </q-card-actions>
 
-    <q-dialog v-model="showFormDishe">
+    <q-dialog v-model="showFormDishe" persistent>
       <form-dishe
         @close="showFormDishe = false"
         :currentDish="dishe"
