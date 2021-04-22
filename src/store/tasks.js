@@ -1,3 +1,5 @@
+import { LocalStorage } from "quasar";
+
 const state = {
   dishes: [
     {
@@ -35,10 +37,16 @@ const state = {
   ]
 };
 
+// LocalStorage.set("dishes", state.dishes);
+
+// LocalStorage.clear();
+
+// console.log("Test:", state, LocalStorage.getItem("dishes"));
+
 /*
 Mutations : méthode qui manipulent les données
 Les mutations ne peuvent pas être asynchrones !!!
- */
+*/
 const mutations = {
   deleteDish(state, id) {
     state.dishes = state.dishes.filter(el => el.id !== id);
@@ -56,6 +64,10 @@ const mutations = {
       // Modifie l'objet trouvé avec les nouvelles valeurs
       Object.assign(state.dishes[index], payload);
     }
+  },
+
+  setDishes(state, dishes) {
+    state.dishes = dishes;
   }
 };
 /*
@@ -82,6 +94,10 @@ const actions = {
 
   editDish({ commit }, dish) {
     commit("editDish", dish);
+  },
+
+  getDishes({ commit }, dishes) {
+    commit("setDishes", dishes);
   }
 };
 

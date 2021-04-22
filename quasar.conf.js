@@ -41,7 +41,8 @@ module.exports = function(ctx) {
         "QImg",
         "QRating",
         "QDialog",
-        "QInput"
+        "QInput",
+        "QPullToRefresh"
       ],
 
       directives: ["Ripple", "ClosePopup"],

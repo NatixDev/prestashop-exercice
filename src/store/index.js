@@ -17,11 +17,21 @@ export default function(/* { ssrContext } */) {
       // Votre module ici (mettre une virgule à la fin de la ligne 18)
       tasks
     },
+    // watch: {
+    //   dishes: {
+    //     handler() {
+    //       console.log('Dishes changed!');
+    //       this.$q.localStorage.set('dishes', this.dishes);
+    //     }
+    //   }
+    // },
 
     // enable strict mode (adds overhead!)
     // for dev mode only
     strict: process.env.DEV
   });
+
+  // console.log("Store", Store.tasks, this.state);
 
   return Store;
 }
